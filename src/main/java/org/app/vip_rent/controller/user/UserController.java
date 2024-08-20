@@ -16,6 +16,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
+    //This is getmapping for getting all users
     @GetMapping("getAllUsers")
     public DataResult<List<User>> getAllUsers() {
         return userService.getAllUsers();
