@@ -1,6 +1,7 @@
 package org.app.vip_rent.controller.user;
 
 import lombok.RequiredArgsConstructor;
+import org.app.vip_rent.modal.dto.UserDto;
 import org.app.vip_rent.modal.entity.user.User;
 import org.app.vip_rent.request.UserRequest;
 import org.app.vip_rent.result.DataResult;
@@ -18,7 +19,7 @@ public class UserController {
 
     //This is getmapping for getting all users
     @GetMapping("getAllUsers")
-    public DataResult<List<User>> getAllUsers() {
+    public DataResult<List<UserDto>> getAllUsers() {
         return userService.getAllUsers();
     }
 

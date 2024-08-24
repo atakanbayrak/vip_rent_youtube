@@ -1,6 +1,8 @@
 package org.app.vip_rent.service.user;
 
 import lombok.RequiredArgsConstructor;
+import org.app.vip_rent.mappers.UserToUserDtoMapper;
+import org.app.vip_rent.modal.dto.UserDto;
 import org.app.vip_rent.modal.entity.user.User;
 import org.app.vip_rent.repository.user.UserRepository;
 import org.app.vip_rent.request.UserRequest;
@@ -8,6 +10,7 @@ import org.app.vip_rent.result.DataResult;
 import org.app.vip_rent.result.Result;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,11 +19,17 @@ import java.util.Optional;
 public class UserService implements IUserService{
     private final UserRepository userRepository;
     @Override
-    public DataResult<List<User>> getAllUsers() {
+    public DataResult<List<UserDto>> getAllUsers() {
         List<User> users = userRepository.findAll();
         if(users.isEmpty())
-            return new DataResult<>(null, Result.showMessage(Result.SERVER_ERROR,"Users not found"));
-        return new DataResult<>(users, Result.showMessage(Result.SUCCESS,"Users listed successfully"));
+            return new DataResult<>(null, Result.showMessage(Result.SUCCESS,"Users not found"));
+
+        List<UserDto> dtoUsers = new ArrayList<>();
+        for(User user: users)
+        {
+            dtoUsers.add(UserToUserDtoMapper.mapToUserDtoMapper(user));
+        }
+        return new DataResult<>(dtoUsers, Result.showMessage(Result.SUCCESS,"Users listed successfully"));
     }
 
     @Override
